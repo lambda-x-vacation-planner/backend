@@ -8,6 +8,7 @@ exports.up = function(knex) {
         t.datetime('createdAt'); // use new Date() for our date-times
         t.datetime('updatedAt');
 
+        t.integer('likes');
 
          // foreign key to user
          t.integer('user_id')

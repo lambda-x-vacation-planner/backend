@@ -7,6 +7,8 @@ exports.up = function(knex) {
         t.string('location');
         t.string('description');
 
+        t.integer('likes');
+
         // foreign key to user who took picture
         t.integer('user_id')
         .unsigned()

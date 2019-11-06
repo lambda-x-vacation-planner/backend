@@ -7,6 +7,8 @@ exports.up = function(knex) {
         t.datetime('createdAt'); // use new Date() for our date-times
         t.datetime('updatedAt');
 
+        t.integer('likes');
+
          // foreign key to thread post belongs to
          t.integer('thread_id')
          .unsigned()
