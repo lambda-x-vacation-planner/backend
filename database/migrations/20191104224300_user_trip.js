@@ -1,7 +1,7 @@
 // this table is a connection between the user and their trips
 exports.up = function(knex) {
     return knex.schema.createTable('user_trip', t =>{
-        t.increments();
+        t.increments('id');
 
          // foreign key to user
          t.integer('user_id')

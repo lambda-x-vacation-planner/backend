@@ -1,6 +1,6 @@
 exports.up = function(knex) {
     return knex.schema.createTable('post', t =>{
-        t.increments();
+        t.increments('id');
 
         t.string('message');
         

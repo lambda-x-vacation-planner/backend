@@ -1,6 +1,6 @@
 exports.up = function(knex) {
     return knex.schema.createTable('expense', t =>{
-        t.increments();
+        t.increments('id');
 
         t.datetime('createdAt'); // use new Date() for our date-times
 
@@ -17,5 +17,3 @@ exports.up = function(knex) {
 exports.down = function(knex) {
     return knex.schema.dropTableIfExists('expense')
 };
-
-// name before change 20191104230532_expense

@@ -1,6 +1,6 @@
 exports.up = function(knex) {
     return knex.schema.createTable('activity', t =>{
-        t.increments();
+        t.increments('id');
 
         t.datetime('start_date'); // use new Date() for our date-times
         t.datetime('end_date');
@@ -24,5 +24,3 @@ exports.up = function(knex) {
 exports.down = function(knex) {
     return knex.schema.dropTableIfExists('activity')
 };
-
-// name before change 20191104224846_activity

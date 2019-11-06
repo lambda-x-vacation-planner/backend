@@ -1,6 +1,6 @@
 exports.up = function(knex) {
     return knex.schema.createTable('destination', t =>{
-        t.increments();
+        t.increments('id');
 
         t.string('name');
         t.string('description');
@@ -14,5 +14,3 @@ exports.up = function(knex) {
 exports.down = function(knex) {
     return knex.schema.dropTableIfExists('destination')
 };
-
-// name before change 20191104225150_destination

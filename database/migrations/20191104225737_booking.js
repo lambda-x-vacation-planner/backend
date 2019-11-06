@@ -1,6 +1,6 @@
 exports.up = function(knex) {
     return knex.schema.createTable('booking', t =>{
-        t.increments();
+        t.increments('id');
 
         t.datetime('date'); // use new Date() for our date-times
 
