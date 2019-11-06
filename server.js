@@ -22,7 +22,10 @@ server.get('/', (req,res) => {
     }
   });
 
-// endpoints
+// routes
+// users
+const userRouter = require('./api/routes/userRoute');
+server.use('/user', userRouter)
 
 //exporting the server code
 module.exports = server;
