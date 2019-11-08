@@ -10,12 +10,7 @@ exports.up = function(knex, promise) {
 
         t.string('pfp') // profile picture, i am not 100% how we are gonna store the pictures but lets use a string url for now
 
-        // foreign key to role table
-        t.integer('role_id')
-        .unsigned()
-        .references('id').inTable('role')
-        .onDelete('CASCADE')
-        .onUpdate('CASCADE');
+        t.integer('role')
     })
   };
   
