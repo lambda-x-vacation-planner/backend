@@ -1,6 +1,10 @@
 const express = require('express');
+
 const router = express.Router();
 const model = require('../model/user');
+
+//encryption
+const bcrypt = require('bcrypt')
 
 //  /user
 // GET & POST
@@ -19,7 +23,6 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) =>{
   const user = req.body;
 
-  // NEED TO ADD AN AUTH SERVICE!
   !user.email
   ? res.status(400).json({ message: 'No Email!' })
   : model.add(user)
