@@ -23,7 +23,7 @@ server.use(express.json());
 // server welcome message
 server.get('/', (req,res) => {
     try {
-    res.send(`Server Online`);
+    res.send(`Server is Alive & Willing.`);
     } catch(error) {
       res.status(500).json(error.response);
     }
@@ -33,9 +33,14 @@ server.get('/', (req,res) => {
 // users
 const userRouter = require('./api/routes/userRoute');
 server.use('/user', userRouter);
+
 // photos
 // const photoRouter = require('./api/routes/photoRoute');
 // server.use('/gallery', photoRouter);
+
+// notes
+const noteRouter = require('./api/routes/noteRoute');
+server.use('/user/note');
 
 //exporting the server code
 module.exports = server;
