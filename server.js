@@ -34,8 +34,8 @@ server.get('/', (req,res) => {
 const userRouter = require('./api/routes/userRoute');
 server.use('/user', userRouter);
 // photos
-const photoRouter = require('./api/routes/photoRoute');
-server.use('/gallery', photoRouter);
+// const photoRouter = require('./api/routes/photoRoute');
+// server.use('/gallery', photoRouter);
 
 //exporting the server code
 module.exports = server;
