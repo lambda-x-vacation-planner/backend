@@ -2,7 +2,7 @@ exports.up = function(knex) {
     return knex.schema.createTable('photo', t =>{
         t.increments('id');
 
-        t.string('location_url'); // i am not 100% how we are gonna store the pictures but lets use a string url for now
+        t.text('image');
         t.string('name');
         t.string('location');
         t.string('description');

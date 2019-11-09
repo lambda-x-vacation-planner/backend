@@ -9,7 +9,6 @@ const bcrypt = require('bcrypt')
 //  /user
 // GET & POST
 router.get('/', (req, res) => {
-
   model.find()
     .then(user => {
       user 
@@ -26,15 +25,16 @@ router.post('/', async (req, res) =>{
   try{
     let salty = await bcrypt.genSalt(12)
     let encryptedPass = await bcrypt.hash(req.body.password, salty);
-    const user = {  password: encryptedPass,
+    const user = {  
+                  password: encryptedPass,
                   email: req.body.email,
                   username: req.body.username,
                   name: req.body.name,
                   pfp: req.body.pfp,
-                  role: req.body.role_id};
-                  console.log(user);
-                  model.add(user);
-                  res.status(200).send(user);
+                  role: req.body.role_id
+                };
+    model.add(user);
+    res.status(200).send(user);
   }
   catch{
       error => res.status(500).send(error) && console.log(error);

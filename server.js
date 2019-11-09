@@ -2,18 +2,25 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet')
 const logger = require('./middleware/logger')
+const morgan = require('morgan')
+// const bodyParser from 'body-parser';
 
 const server = express()
 
 // middleware
+// for functioning with APPLICATIONS
 server.use(cors());
+// for security
 server.use(helmet());
+// for logs
+server.use(morgan('dev'));
 server.use(logger);
 
 // setting my data to be sent as json
 server.use(express.json());
+// server.use(express.urlencoded({extended: true}));
 
-// server
+// server welcome message
 server.get('/', (req,res) => {
     try {
     res.send(`Server Online`);
@@ -22,10 +29,13 @@ server.get('/', (req,res) => {
     }
   });
 
-// routes
+// ROUTES
 // users
 const userRouter = require('./api/routes/userRoute');
-server.use('/user', userRouter)
+server.use('/user', userRouter);
+// photos
+const photoRouter = require('./api/routes/photoRoute');
+server.use('/gallery', photoRouter);
 
 //exporting the server code
 module.exports = server;
