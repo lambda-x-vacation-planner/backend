@@ -1,10 +1,12 @@
 const express = require('express');
 const cors = require('cors');
+const helmet = require('helmet')
 
 const server = express()
 
 // middleware
 server.use(cors());
+server.use(helmet());
 
 // setting my data to be sent as json
 server.use(express.json());
