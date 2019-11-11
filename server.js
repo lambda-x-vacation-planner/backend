@@ -40,7 +40,7 @@ server.use('/user', userRouter);
 
 // notes
 const noteRouter = require('./api/routes/noteRoute');
-server.use('/user/note');
+server.use('/user/note', noteRouter);
 
 //exporting the server code
 module.exports = server;
