@@ -42,5 +42,9 @@ server.use('/user', userRouter);
 const noteRouter = require('./api/routes/noteRoute');
 server.use('/user/note', noteRouter);
 
+// trips
+const tripRouter = require('./api/routes/tripRoute');
+server.use('/trips', tripRouter)
+
 //exporting the server code
 module.exports = server;

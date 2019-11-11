@@ -61,6 +61,20 @@ model.findByEmail(email)
   }
 )})
 
+// Find user by ID
+router.get('/:id', (req, res) => {
+  try{
+      model.findById(req.params.id)
+      .then(user => {
+          user
+          ? res.status(200).json(user)
+          : res.status(404).json({ message: 'There are no users that have this ID' });
+        })
+  }catch(error){
+      res.status(500).json(error);
+  }
+});
+
 //* * * * * * * * * *
 // /user/:id
 // DELETE
