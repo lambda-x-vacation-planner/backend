@@ -11,7 +11,7 @@ router.post('/', (req, res) => {
         // for a suer to create a destination they must have all location, name, arrival_date filled out
         !location || !name || !arrival_date
         ? res.status(422).json({message: 'To create a destination you must have a Name, Location, and the date/time when you re expected to arrive.'})
-        : model.insert(dest) && res.status(200).json(dest);
+        : model.insert(dest) && res.status(201).json(dest);
 
     } catch(error){
         res.status(500).json(error);

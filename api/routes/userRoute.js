@@ -33,7 +33,7 @@ router.post('/', async (req, res) =>{
                   role: req.body.role_id
                 };
     model.add(user);
-    res.status(200).send(user);
+    res.status(201).send(user);
   }
   catch{
       error => res.status(500).send(error) && console.log(error);
@@ -49,7 +49,7 @@ model.findByEmail(email)
   .then(user=>{
     // compare passwords to see if they match
     if(user && bcrypt.compareSync(password, user.password)){
-      res.status(200).json({
+      res.status(202).json({
         message: `Welcome ${user.username}.`
       });
     } else {

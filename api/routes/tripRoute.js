@@ -48,7 +48,7 @@ router.post('/', (req, res) => {
         const {name, location, description} = req.body
         !name || !location || !description
         ? res.status(422).json({message: 'Please fill out name of the trip, location, and add a description.'})
-        : model.insert(trip) && res.status(200).json(trip);
+        : model.insert(trip) && res.status(201).json(trip);
     }catch(error){
         res.status(500).json(error);
     }

@@ -25,7 +25,7 @@ router.post('/', async (req, res) =>{
         !host
         ? res.status(422).json({message: 'Every activity needs a HOST'})
         : model.insert(activity) 
-        && res.status(200).json(activity);
+        && res.status(201).json(activity);
         
     }catch(e){
         res.status(500).json(e);

@@ -31,28 +31,35 @@ server.get('/', (req,res) => {
 
 // ROUTES
 // users
-const userRouter = require('./api/routes/userRoute');
-server.use('/user', userRouter);
+const userRoute = require('./api/routes/userRoute');
+server.use('/user', userRoute);
 
-// photos
+// photos *UNDER CONSTRUCTION*
 // const photoRouter = require('./api/routes/photoRoute');
 // server.use('/gallery', photoRouter);
 
 // notes
-const noteRouter = require('./api/routes/noteRoute');
-server.use('/user/note', noteRouter);
+const noteRoute = require('./api/routes/noteRoute');
+server.use('/user/note', noteRoute);
 
 // trips
-const tripRouter = require('./api/routes/tripRoute');
-server.use('/trips', tripRouter)
+const tripRoute = require('./api/routes/tripRoute');
+server.use('/trips', tripRoute)
 
 // activity
-const activityRouter = require('./api/routes/activityRouter')
-server.use('/activity', activityRouter);
+const activityRoute = require('./api/routes/activityRouter')
+server.use('/activity', activityRoute);
 
 // destinations
-const destinationsRouter = require('./api/routes/destinationRouter');
-server.use('/destine', destinationsRouter);
+const destinationsRoute = require('./api/routes/destinationRouter');
+server.use('/destine', destinationsRoute);
+
+// threads
+const threadRoute = require('./api/routes/threadRouter');
+server.use('/thread' , threadRoute);
+// posts
+const postRoute = require('./api/routes/postRouter');
+server.use('/thread/post', postRoute);
 
 //exporting the server code
 module.exports = server;
