@@ -1,15 +1,20 @@
+require('dotenv').config();
+// the key MUST be 32 bits or it WILL ERROR OUT
 const key = process.env.TOKEN_KEY;
-console.log(key)
 const branca = require('branca')(key);
 
-function tkGive(password) {
-const token = branca.encode(password);
-return token
+// the password giver is given a token
+function tkGive(email) {
+    try {   const token = branca.encode(email);
+            return token} 
+catch(e){   console.log(e)}
 }
 
+// the token giver will receive a secret password
 function tkTake(token){
-const payload = branca.decode(token);
-return payload.toString();
+    try{    const payload = branca.decode(token);
+            return payload.toString();}
+catch(e){   console.log(e)}
 }
 
 // this middleware takes care of tokens using the dependancey branca

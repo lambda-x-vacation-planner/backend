@@ -4,9 +4,10 @@ const model = require('../model/user');
 
 //encryption
 const bcrypt = require('bcrypt')
+const {tkGive} = require('../../middleware/tkservice')
 
 //  /user
-// GET & POST
+// GET ALL USERS
 router.get('/', (req, res) => {
   model.find()
     .then(user => {
@@ -19,11 +20,11 @@ router.get('/', (req, res) => {
 );
 
 // ROUTE USED TO CREATE A USER
-router.post('/', async (req, res) =>{
-
+router.post('/reg', async (req, res) =>{
   try{
     let salty = await bcrypt.genSalt(12)
     let encryptedPass = await bcrypt.hash(req.body.password, salty);
+    const token = tkGive(req.body.password);
     const user = {  
                   password: encryptedPass,
                   email: req.body.email,
@@ -32,25 +33,29 @@ router.post('/', async (req, res) =>{
                   pfp: req.body.pfp,
                   role: req.body.role_id
                 };
-    model.add(user);
-    res.status(201).send(user);
+    !user.password || !user.email
+    ? res.status(400).json({message: 'Please provide an email and password'})
+    : await model.add(user) &&  res.status(201).json({user, token});
   }
-  catch{
-      error => res.status(500).send(error) && console.log(error);
+  catch(error){
+    res.status(500).send(error);
   }
 })
 
 // ROUTE TO SIGN IN
 router.post('/login', async (req, res) => {
-let {email , password } = req.body;
+let {email , password} = req.body;
 
 // fist search for the email
 model.findByEmail(email)
   .then(user=>{
     // compare passwords to see if they match
     if(user && bcrypt.compareSync(password, user.password)){
+      // generate token //
+      const token = tkGive(user.password);
+      //   send   //
       res.status(202).json({
-        message: `Welcome ${user.username}.`
+        message: `Welcome ${user.username}.` , token
       });
     } else {
       res.status(422).json({message: 'Invalid Login'});

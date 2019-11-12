@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet')
 const logger = require('./middleware/logger')
 const morgan = require('morgan')
+require('dotenv').config();
 // const bodyParser from 'body-parser';
 
 const server = express()
