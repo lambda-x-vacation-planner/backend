@@ -52,7 +52,7 @@ server.use('/activity', activityRouter);
 
 // destinations
 const destinationsRouter = require('./api/routes/destinationRouter');
-server.use('/activity/des', destinationsRouter);
+server.use('/destine', destinationsRouter);
 
 //exporting the server code
 module.exports = server;

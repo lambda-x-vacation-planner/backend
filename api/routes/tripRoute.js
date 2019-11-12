@@ -13,7 +13,7 @@ router.get('/', async(req, res) =>{
     } catch(error){
         res.status(500).json(error);
     }
-})
+});
 
 // GET TRIP BY ID
 router.get('/:id', (req, res) => {
@@ -36,7 +36,6 @@ router.get('/:location', async (req, res) => {
 
         model.findByLocation(areaLookUp.location)
         .then(trips => {res.status(200).json(trips);})
-        // trying to figure out how to make the qurey here only for locations
     }catch(error){
         res.status(500).json(error);
     }
