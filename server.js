@@ -8,7 +8,7 @@ const morgan = require('morgan')
 const server = express()
 
 // middleware
-// for functioning with APPLICATIONS
+// for functioning with APPLICATIONS 
 server.use(cors());
 // for security
 server.use(helmet());
@@ -45,6 +45,14 @@ server.use('/user/note', noteRouter);
 // trips
 const tripRouter = require('./api/routes/tripRoute');
 server.use('/trips', tripRouter)
+
+// activity
+const activityRouter = require('./api/routes/activityRouter')
+server.use('/activity', activityRouter);
+
+// destinations
+const destinationsRouter = require('./api/routes/destinationRouter');
+server.use('/activity/des', destinationsRouter);
 
 //exporting the server code
 module.exports = server;
