@@ -6,7 +6,7 @@ exports.up = function(knex) {
         t.datetime('end_date');
         t.string('location');
         t.integer('rating'); // RATE THE ACTIVITY!
-        t.string('name');
+        t.string('name',64);
         t.string('description');
         t.string('host');
         t.boolean('pending')

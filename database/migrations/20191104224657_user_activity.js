@@ -17,6 +17,13 @@ exports.up = function(knex) {
          .onDelete('CASCADE')
          .onUpdate('CASCADE');
 
+        // foreign key to bookings
+         t.integer('booking_id')
+         .unsigned()
+         .references('id').inTable('booking')
+         .onDelete('CASCADE')
+         .onUpdate('CASCADE');
+
          t.boolean('completed');
     })
 };

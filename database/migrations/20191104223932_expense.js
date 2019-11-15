@@ -6,10 +6,11 @@ exports.up = function(knex) {
 
         t.string('title');
         t.string('description');
-        t.integer('amount');
-        t.boolean('paid');
-        
-        // we may need to have a credit card table to save payments!
+        t.integer('cost');
+        t.integer('paid');
+
+        t.boolean('competed')
+       // we may need to have a credit card table to save payments!
 
     })
 };
