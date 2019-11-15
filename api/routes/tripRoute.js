@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const model = require('../model/trip');
 
+// middleware
+const routeGuardian = require('../../middleware/routeGuardian')
+
 // /trips/
 // GET ALL TRIPS
 router.get('/', async(req, res) =>{

@@ -10,12 +10,12 @@ function tkGive(email) {
 catch(e){   console.log(e)}
 }
 
-// the token giver will receive a secret password
-function tkTake(token){
+// tkTake takes both a token AND a response so it can send status codes
+function tkTake(token, res){
     try{    const payload = branca.decode(token);
             return payload.toString();}
-catch(e){   console.log(e)}
+catch(e){   console.log(e) , res.status(401).json({ message: 'You are not authorized. Please sign in'});}
 }
 
-// this middleware takes care of tokens using the dependancey branca
-module.exports = {tkGive, tkTake}
+// this middleware takes care of tokens using the dependency branca
+module.exports = { tkGive, tkTake }

@@ -24,7 +24,7 @@ router.post('/reg', async (req, res) =>{
   try{
     let salty = await bcrypt.genSalt(12)
     let encryptedPass = await bcrypt.hash(req.body.password, salty);
-    const token = tkGive(req.body.password);
+    const token = tkGive(req.body.email);
     const user = {  
                   password: encryptedPass,
                   email: req.body.email,
@@ -33,9 +33,16 @@ router.post('/reg', async (req, res) =>{
                   pfp: req.body.pfp,
                   role: req.body.role_id
                 };
-    !user.password || !user.email
-    ? res.status(400).json({message: 'Please provide an email and password'})
-    : await model.add(user) &&  res.status(201).json({user, token});
+    // first we check if the email exists
+    model.findByEmail(user.email)
+    .then(emailCheck =>{
+      emailCheck === undefined || emailCheck.email != user.email && user
+      // email, password, and name are required to create a new user
+      ? !user.password || !user.email || !user.name
+        ? res.status(400).json({message: 'Please provide an email, name and password while creating a user'})
+        : model.add(user) &&  res.status(201).json({user, token})
+      :res.status(409).json({message: 'Email aready exists'});
+    });
   }
   catch(error){
     res.status(500).send(error);
@@ -52,7 +59,7 @@ model.findByEmail(email)
     // compare passwords to see if they match
     if(user && bcrypt.compareSync(password, user.password)){
       // generate token //
-      const token = tkGive(user.password);
+      const token = tkGive(user.email);
       //   send   //
       res.status(202).json({
         message: `Welcome ${user.username}.` , token

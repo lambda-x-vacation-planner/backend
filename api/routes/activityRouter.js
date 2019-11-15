@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const model = require('../model/activity');
-const searchUsers = require('../model/user')
 
 // middleware
-const {tkTake} = require('../../middleware/tkservice')
+const routeGuardian = require('../../middleware/routeGuardian');
 
 // /activity
 // GET ALL 
@@ -19,10 +18,11 @@ router.get('/', async (req, res) =>{
     }
 })
 
-// POST @ /
+// POST @ /activity
 router.post('/' , async (req, res) =>{
     try{
-      
+        routeGuardian(req.headers.token, res);
+
         const activity = req.body;
         // ALL ACTIVITIES MUST HAVE A HOST, KNOWING MOST OF THEM WILL BE USER SPONSORED IT WOULD MAKE WHOMEVER CREATED IT THE HOST
         const {host} = req.body;
@@ -32,8 +32,8 @@ router.post('/' , async (req, res) =>{
         : model.insert(activity) 
         && res.status(201).json(activity);
         
-    }catch(e){
-        res.status(500).json(e);
+    }catch(error){
+        res.status(500).send(error);
     }
 })
 
