@@ -14,7 +14,7 @@ catch(e){   console.log(e)}
 function tkTake(token, res){
     try{    const payload = branca.decode(token);
             return payload.toString();}
-catch(e){   console.log(e) , res.status(401).json({ message: 'You are not authorized. Please sign in'});}
+catch(e){   console.log(e) && res.status(401).json({ message: 'You are not authorized. Please sign in'});}
 }
 
 // this middleware takes care of tokens using the dependency branca

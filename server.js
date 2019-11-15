@@ -43,10 +43,6 @@ server.use('/user', userRoute);
 const noteRoute = require('./api/routes/noteRoute');
 server.use('/user/note', noteRoute);
 
-// trips
-const tripRoute = require('./api/routes/tripRoute');
-server.use('/trips', tripRoute)
-
 // activity
 const activityRoute = require('./api/routes/activityRouter')
 server.use('/activity', activityRoute);
