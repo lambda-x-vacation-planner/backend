@@ -1,5 +1,16 @@
 const multer = require("multer");
-const storage = multer.memoryStorage();
-const multerUploads = multer({ storage }).single("photo");
+const path = require("path");
 
-module.exports = multerUploads;
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    // Might be an issue on production site
+    cb(null, path.join(__dirname, "../uploads"));
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + "-" + Date.now());
+  },
+});
+
+const upload = multer({ storage: storage });
+
+module.exports = upload;

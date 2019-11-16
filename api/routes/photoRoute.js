@@ -1,80 +1,95 @@
 const express = require("express");
 const photoRouter = express.Router();
 const model = require("../model/photo");
-const multerUploads = require("../../middleware/multer");
+const upload = require("../../middleware/multer");
 
-// just logging image data for now
-photoRouter.post("/", multerUploads, (req, res) => {
-  if (req.file) {
-    console.log("req.body :", req.body);
-    console.log("req.file :", req.file);
-    console.log("done");
+// SAVE A PHOTO - currently by file path, check for issues with deployment
+// TODO: ADD FILE EXTENSIONS?
+photoRouter.post("/", upload.single("image"), (req, res) => {
+  if (!req.file) {
+    res.status(422).send({ message: "Please make sure to upload a photo" });
   } else {
-    console.log("No File Uploaded");
+    const photo = {
+      image: req.file.path,
+      name: req.file.filename,
+      location: req.body.location,
+      description: req.body.description,
+    };
+    if (!photo) {
+      res
+        .status(422)
+        .send({ message: "Please make sure all fields are completed" });
+    }
+    model
+      .insert(photo)
+      .then(savedPhoto => {
+        res.status(201).json(savedPhoto);
+      })
+      .catch(err => {
+        res.status(500).send({
+          err: "Error saving photo to database",
+        });
+      });
   }
 });
 
-// // test upload photos
-// // router.post('/upload',upload.single('image'), (req, res)=>{
-// //   try{
-// //     console.log(req.file, req.body)
-// //   } catch(error){
-// //     res.status(500).json(error) && console.log(error);
-// //   }
-// // })
+// GET ALL PHOTOS
+photoRouter.get("/", (req, res) => {
+  model
+    .find()
+    .then(photos => {
+      res.status(200).json(photos);
+    })
+    .catch(err => {
+      res.status(500).send({
+        error: "Error getting photos from database",
+      });
+    });
+});
 
-//  /gallery
-// GET
-// router.get("/", (req, res) => {
-//   model
-//     .find()
-//     .then(user => {
-//       user
-//         ? res.status(200).json(user)
-//         : res.status(404).json({ error: "Users Not Found" });
-//     })
-//     .catch(error => res.status(500).send(error));
-// });
+// GET PHOTO BY ID
+photoRouter.get("/:id", (req, res) => {
+  const photoID = req.params.id;
+  model
+    .findById(photoID)
+    .then(photo => {
+      if (!photo) {
+        res.status(404).send({ message: "No photo with this ID" });
+      } else {
+        res.status(200).json(photo);
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        error: "Error getting photo from database",
+      });
+    });
+});
 
-// GET BY ID
-// router.get('/:id', (req, res) => {
-//     model.findById(req.body.id)
-//       .then(photo => {
-//         photo && model.insert(photo)
-//         ? res.status(200).json(photo)
-//         : res.status(404).json({ error: 'No Photos Found' });
-//       }).catch(error =>
-//         res.status(500).send(error) && console.log(error));
-//   }
-// );
+// UPDATE A PHOTO
+// TODO: ADD TO MODEL
 
-// CREATE PHOTO
-// router.post("/", (req, res) => {
-//   console.log(res.body);
-//   try {
-//     console.log(photo);
-//     model.insert(photo);
-//     const photo = res.body;
-//     photo ? res.status(200).json(photo) : res.status(422).json(photo);
-//   } catch (error) {
-//     res.status(500).send(error) && console.log(error);
-//   }
-// });
+// DELETE A PHOTO
+photoRouter.delete("/:id", (req, res) => {
+  //const photo = req.body;
+  const photoID = req.params.id;
+  model
+    .remove(photoID)
+    .then(removedPhoto => {
+      if (!removedPhoto) {
+        res.status(404).send({ message: "No photo with this ID" });
+      } else {
+        res.status(200).json(removedPhoto);
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        error: "Error with deleting photo",
+      });
+    });
+});
 
-//* * * * * * * * * *
-// /gallery/:id
-// DELETE
-// router.delete("/:id", (req, res) => {
-//   model
-//     .remove(req.params.id)
-//     .then(deleted => {
-//       deleted
-//         ? res.status(200).json({ message: "Like they were never here." })
-//         : res
-//             .status(404)
-//             .json({ message: "This is not the user you are looking for" });
-//     })
-//     .catch(error => res.status(500).json(error) && console.log(error));
-// });
+// TODO:
+// GET PHOTOS BY USER AND LOCATION
 
 module.exports = photoRouter;
