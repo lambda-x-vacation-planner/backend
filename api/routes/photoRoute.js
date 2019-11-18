@@ -4,7 +4,6 @@ const model = require("../model/photo");
 const upload = require("../../middleware/multer");
 
 // SAVE A PHOTO - currently by file path, check for issues with deployment
-// TODO: ADD FILE EXTENSIONS?
 photoRouter.post("/", upload.single("image"), (req, res) => {
   if (!req.file) {
     res.status(422).send({ message: "Please make sure to upload a photo" });
@@ -67,11 +66,30 @@ photoRouter.get("/:id", (req, res) => {
 });
 
 // UPDATE A PHOTO
-// TODO: ADD TO MODEL
+photoRouter.put("/:id", (req, res) => {
+  const photo = {
+    location: req.body.location,
+    description: req.body.description,
+  };
+  const photoID = req.params.id;
+  model
+    .update(photoID, photo)
+    .then(updatedPhoto => {
+      if (!updatedPhoto) {
+        res.status(404).send({ message: "No photo with this ID" });
+      } else {
+        res.status(200).json(updatedPhoto);
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        err: "Error updating photo",
+      });
+    });
+});
 
 // DELETE A PHOTO
 photoRouter.delete("/:id", (req, res) => {
-  //const photo = req.body;
   const photoID = req.params.id;
   model
     .remove(photoID)
@@ -88,8 +106,5 @@ photoRouter.delete("/:id", (req, res) => {
       });
     });
 });
-
-// TODO:
-// GET PHOTOS BY USER AND LOCATION
 
 module.exports = photoRouter;
