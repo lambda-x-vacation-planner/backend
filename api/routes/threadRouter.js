@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const model = require('../model/thread');
 
+// auth middleware
+const routeGuardian = require('../../middleware/routeGuardian')
+
 // /thread
 
 // GET ALL @ /
@@ -19,10 +22,10 @@ router.get('/', async (req, res) => {
 // POST THREAD TO /
 router.post('/', async (req, res) => {
     try{
-        const {title, message} = req.body;
         const thread = req.body;
+        const {title, message, user_id} = req.body;
         async function post(){await model.insert(thread)};
-        !title || !message
+        !title || !message 
         ? res.status(422).json({message: 'A title and content are needed to create a thread.'})
         : post() && res.status(201).json(thread);
     }catch(e){
@@ -46,12 +49,23 @@ router.get('/:id', async (req, res) => {
 
 // GET BY USER
 router.get('/user/:id', (req, res) => {
+    try{
+        model.findByUser(req.params.id)
+        .then(usersThreads =>{
+            !usersThreads
+            ? res.status(404).json({ message: 'This user has no threads' })
+            : res.status(202).json(usersThreads);
+        })
+    }catch(e){
+        res.status(500).send(e);
+    }
 
 });
 
 // DELETE
 router.delete('/:id', (req, res) => {
     try{
+        routeGuardian(req.headers.token, res);
         model.remove(req.params.id)
         .then(deleted => {
           deleted

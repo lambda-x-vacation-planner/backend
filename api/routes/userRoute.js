@@ -31,7 +31,7 @@ router.post('/reg', async (req, res) =>{
                   username: req.body.username,
                   name: req.body.name,
                   pfp: req.body.pfp,
-                  role: req.body.role_id
+                  role_id: req.body.role_id
                 };
     // first we check if the email exists
     model.findByEmail(user.email)

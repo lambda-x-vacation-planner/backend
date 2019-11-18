@@ -40,6 +40,7 @@ router.post('/' , async (req, res) =>{
 // DELETE BY ID
 router.delete('/:id', (req, res) => {
     try{
+        routeGuardian(req.headers.token, res);
         model.remove(req.params.id)
         .then(deleted => {
           deleted
@@ -54,6 +55,7 @@ router.delete('/:id', (req, res) => {
 // GET by ID
 router.get('/:id', async (req, res) => {
     try{
+        routeGuardian(req.headers.token, res);
         await model.findById(req.params.id)
         .then(activity => {
             activity

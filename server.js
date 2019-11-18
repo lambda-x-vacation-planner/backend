@@ -35,6 +35,14 @@ server.get('/', (req,res) => {
 const userRoute = require('./api/routes/userRoute');
 server.use('/user', userRoute);
 
+// user_activities that assonate with bookings and activities
+const userActivityRoute = require('./api/routes/userActivityRoute')
+server.use('/user/trip', userActivityRoute);
+
+// booking
+const userBookingRoute = require('./api/routes/bookingRoute.js');
+server.use('/user/trip/book', userBookingRoute);
+
 // photos *UNDER CONSTRUCTION*
 // const photoRouter = require('./api/routes/photoRoute');
 // server.use('/gallery', photoRouter);

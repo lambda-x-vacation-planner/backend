@@ -12,7 +12,7 @@ function routeGuardian(token, res){
         user.email === tkTake(token, res) && user != null && user != undefined
         ? console.log('Request Validated by Authentication')
         : res.status(401).json({message: 'You are not allowed.'});
-    }).catch(error =>res.status(500).send(error))
+    }).catch(error =>res.status(500).send(error));
 };
 
 module.exports = routeGuardian;

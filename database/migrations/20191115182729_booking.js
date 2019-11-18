@@ -17,6 +17,12 @@ exports.up = function(knex) {
          .onDelete('CASCADE')
          .onUpdate('CASCADE');
 
+         t.integer('creator_user_id')
+         .unsigned()
+         .references('id').inTable('users')
+         .onDelete('CASCADE')
+         .onUpdate('CASCADE');
+
         // foreign key to expense
         t.integer('expense_id')
         .unsigned()

@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const model = require('../model/destination');
 
+// authorization middleware
+const routeGuardian = require('../../middleware/routeGuardian')
+
 // /destine
 // POST @ / 
 router.post('/', (req, res) => {
@@ -35,6 +38,7 @@ router.get('/:id', async (req, res) => {
 
 // DELETE
 router.delete('/:id', (req, res) => {
+    routeGuardian(req.headers.token, res);
     try{
         model.remove(req.params.id)
         .then(deleted => {
