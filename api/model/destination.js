@@ -5,39 +5,32 @@ module.exports = {
   insert,
   findById, 
   remove, 
-  findByLocation,
   findByName
 };
 
 function find() {
-  return db('trip');
+  return db('destination');
 };
 
-async function insert(trip) {
-  return db('trip')
-  .insert(trip);
+async function insert(destination) {
+  return db('destination')
+  .insert(destination);
 };
 
 function findById(id) {
-  return db('trip')
+  return db('destination')
     .where({ id })
     .first();
 };
 
-function findByLocation(location) {
-    return db('trip')
-      .where({ location })
-      .first();
-};
-
 function findByName(name) {
-    return db('trip')
+    return db('destination')
       .where({ name })
       .first();
 };
 
 function remove(id) {
-  return db('trip')
+  return db('destination')
     .where({ id })
     .first()
     .del();

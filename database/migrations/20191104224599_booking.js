@@ -1,7 +1,8 @@
 exports.up = function(knex) {
     return knex.schema.createTable('booking', t =>{
         t.increments('id');
-
+        
+        t.datetime('createdAt').defaultTo(knex.fn.now());
         t.datetime('date'); // use new Date() for our date-times
 
         t.string('name');

@@ -4,8 +4,8 @@ exports.up = function(knex) {
 
         t.string('message');
         
-        t.datetime('createdAt'); // use new Date() for our date-times
-        t.datetime('updatedAt');
+        t.datetime('createdAt').defaultTo(knex.fn.now());
+        t.datetime('updatedAt').defaultTo(knex.fn.now());
 
         t.integer('likes');
 

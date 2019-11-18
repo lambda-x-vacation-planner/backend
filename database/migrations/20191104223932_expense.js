@@ -2,14 +2,15 @@ exports.up = function(knex) {
     return knex.schema.createTable('expense', t =>{
         t.increments('id');
 
-        t.datetime('createdAt'); // use new Date() for our date-times
+        t.datetime('createdAt').defaultTo(knex.fn.now());
 
         t.string('title');
         t.string('description');
-        t.integer('amount');
-        t.boolean('paid');
-        
-        // we may need to have a credit card table to save payments!
+        t.integer('cost');
+        t.integer('paid');
+
+        t.boolean('competed')
+       // we may need to have a credit card table to save payments!
 
     })
 };

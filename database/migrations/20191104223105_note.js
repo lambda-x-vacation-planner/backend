@@ -3,6 +3,7 @@ exports.up = function(knex) {
         t.increments('id');
 
         t.string('note');
+        t.datetime('createdAt').defaultTo(knex.fn.now())
 
          // foreign key to user 
          t.integer('user_id')
