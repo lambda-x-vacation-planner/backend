@@ -4,9 +4,8 @@ const helmet = require('helmet')
 const logger = require('./middleware/logger')
 const morgan = require('morgan')
 require('dotenv').config();
-// const bodyParser from 'body-parser';
 
-const server = express()
+const server = express();
 
 // middleware
 // for functioning with APPLICATIONS 
@@ -14,7 +13,7 @@ server.use(cors());
 // for security
 server.use(helmet());
 // for logs
-server.use(morgan('dev'));
+server.use(morgan("dev"));
 server.use(logger);
 
 // setting my data to be sent as json
@@ -22,13 +21,13 @@ server.use(express.json());
 // server.use(express.urlencoded({extended: true}));
 
 // server welcome message
-server.get('/', (req,res) => {
-    try {
+server.get("/", (req, res) => {
+  try {
     res.send(`Server is Alive & Willing.`);
-    } catch(error) {
-      res.status(500).json(error.response);
-    }
-  });
+  } catch (error) {
+    res.status(500).json(error.response);
+  }
+});
 
 // ROUTES
 // users
@@ -43,9 +42,9 @@ server.use('/user/trip', userActivityRoute);
 const userBookingRoute = require('./api/routes/bookingRoute.js');
 server.use('/user/trip/book', userBookingRoute);
 
-// photos *UNDER CONSTRUCTION*
-// const photoRouter = require('./api/routes/photoRoute');
-// server.use('/gallery', photoRouter);
+// photos
+const photoRouter = require('./api/routes/photoRoute');
+server.use('/gallery', photoRouter);
 
 // notes
 const noteRoute = require('./api/routes/noteRoute');
