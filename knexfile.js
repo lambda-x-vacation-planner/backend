@@ -13,7 +13,7 @@ const dbConnection = process.env.DATABASE_URL || localPg;
 module.exports = {
 
   development: {
-    client: 'pg',
+    client: 'postgresql',
     connection: dbConnection,
     migrations: {
 			directory: 'database/migrations'
