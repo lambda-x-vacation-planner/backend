@@ -19,6 +19,7 @@ router.get('/', (req, res) => {
 }
 );
 
+// /user/reg
 // ROUTE USED TO CREATE A USER
 router.post('/reg', async (req, res) =>{
   try{
@@ -49,6 +50,7 @@ router.post('/reg', async (req, res) =>{
   }
 })
 
+// /user/login
 // ROUTE TO SIGN IN
 router.post('/login', async (req, res) => {
 let {email , password} = req.body;

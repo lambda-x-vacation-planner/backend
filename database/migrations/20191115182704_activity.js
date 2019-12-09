@@ -9,7 +9,6 @@ exports.up = function(knex) {
         t.string('name',64);
         t.string('description');
         t.string('host');
-        t.boolean('pending')
         t.boolean('completed');
 
         t.datetime('createdAt').defaultTo(knex.fn.now());

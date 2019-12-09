@@ -9,7 +9,7 @@ exports.up = function(knex) {
         t.integer('cost');
         t.integer('paid');
 
-        t.boolean('competed')
+        t.boolean('competed').notNullable().defaultTo(false);
        // we may need to have a credit card table to save payments!
 
     })

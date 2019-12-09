@@ -6,7 +6,10 @@ module.exports = {
   findById, 
   remove, 
   findByActivity,
-  createExpense
+  createExpense,
+  findExpense,
+  insertExpense,
+  updateExpenses
 };
 
 function find() {
@@ -41,4 +44,19 @@ async function createExpense(expense) {
     return db('expenses')
     .insert(expense);
   };
-  
+
+function findExpense(){
+  return db('expense');
+};
+
+async function insertExpense(ex) {
+  return db('expense')
+  .insert(ex);
+};
+
+async function updateExpenses(id, changes) {
+  await db("responses")
+    .where({ id })
+    .update(changes);
+  return findById(id);
+}
