@@ -42,6 +42,7 @@ router.post('/' , async (req, res) =>{
 // DELETE
 router.delete('/:id', (req, res) => {
     try{
+        routeGuardian(req.headers.token, res);
         model.remove(req.params.id)
         .then(deleted => {
           deleted
