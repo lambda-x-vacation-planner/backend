@@ -5,6 +5,7 @@ const model = require('../model/user');
 //encryption
 const bcrypt = require('bcrypt')
 const {tkGive} = require('../../middleware/tkservice')
+const routeGuardian = require('../../middleware/routeGuardian');
 
 //  /user
 // GET ALL USERS
@@ -93,7 +94,7 @@ router.get('/:id', (req, res) => {
 // /user/:id
 // DELETE
 router.delete('/:id',  (req, res) => {
-
+    routeGuardian(req.headers.token, res);
     model.remove(req.params.id)
       .then(deleted => {
         deleted
