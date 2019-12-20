@@ -13,7 +13,7 @@ const dbConnection = process.env.DATABASE_URL || localPg;
 module.exports = {
 
   development: {
-    client: 'postgresql',
+    client: 'pg',
     connection: dbConnection,
     migrations: {
 			directory: 'database/migrations'
@@ -24,7 +24,7 @@ module.exports = {
   },
 
   staging: {
-    client: 'postgresql',
+    client: 'pg',
     connection: {
       database: process.env.DATABASE_URL,
       user:     process.env.DB_USER,
@@ -40,7 +40,7 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
+    client: 'pg',
     connection: dbConnection,
     migrations: {
 			directory: 'database/migrations'
