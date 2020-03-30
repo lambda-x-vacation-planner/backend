@@ -65,7 +65,7 @@ model.findByEmail(email)
       const token = tkGive(user.email);
       //   send   //
       res.status(202).json({
-        message: `Welcome ${user.username}.` , token
+        message: `Welcome ${user.email}.` , token
       });
     } else {
       res.status(422).json({message: 'Invalid Login'});
